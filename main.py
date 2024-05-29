@@ -1,5 +1,8 @@
 import hashlib 
 import datetime as date
+from flask import Flask # type: ignore
+from flask import request # type: ignore
+node = Flask(__name__)
 
 
 class Block:
@@ -13,9 +16,9 @@ class Block:
     def hash_block(self):
         sha = hashlib.sha256()
         hash_string = str(self.index)         
-        str(self.timestamp)
-        str(self.data)
-        str(self.previous_hash)
+        str(self.timestamp) 
+        str(self.data) 
+        str(self.previous_hash) 
         sha.update(hash_string.encode("utf-8"))
         return sha.hexdigest()
 
@@ -23,7 +26,7 @@ class Block:
 # index zero and arbitrary previous hash
   
 def create_genesis_block():
-    return Block(0, date.datetime.now, "Genesis block", "0")
+    return Block(0, date.datetime.now(), "Genesis block", "0")
 
         
 def next_block(last_block):
@@ -38,7 +41,7 @@ def next_block(last_block):
 blockchain  = [create_genesis_block()]
 previous_block = blockchain [0]
 
-num_of_blocks_to_add = 20
+num_of_blocks_to_add = 200
 
 for i in range(0, num_of_blocks_to_add):
         block_to_add = next_block(previous_block)
@@ -47,3 +50,25 @@ for i in range(0, num_of_blocks_to_add):
     
 print ("Block #{} has been added to the blockchain!".format(block_to_add.index))
 print ("Hash: {}\n".format(block_to_add.hash)) 
+# Store the transactions that
+# this node has in a list
+this_nodes_transactions = []
+
+@node.route('/txion', methods=['POST'])
+def transaction():
+  if request.method == 'POST':
+    # On each new POST request,
+    # we extract the transaction data
+    new_txion = request.get_json()
+    # Then we add the transaction to our list
+    this_nodes_transactions.append(new_txion)
+    # Because the transaction was successfully
+    # submitted, we log it to our console
+    print "New transaction"
+    print "FROM: {}".format(new_txion['from'])
+    print "TO: {}".format(new_txion['to'])
+    print "AMOUNT: {}\n".format(new_txion['amount'])
+    # Then we let the client know it worked out
+    return "Transaction submission successful\n"
+
+node.run()
