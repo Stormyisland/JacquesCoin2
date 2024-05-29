@@ -12,15 +12,15 @@ class Block:
         
     def hash_block(self):
         sha = hashlib.sha256()
-        hash_string = (str(self.index) +
-                     str(self.timestamp) +
-                     str(self.data) +
-                     str(self.previous_hash))
+        hash_string = str(self.index)         
+        str(self.timestamp)
+        str(self.data)
+        str(self.previous_hash)
         sha.update(hash_string.encode("utf-8"))
         return sha.hexdigest()
 
-  # Manually construct a block with
-  # index zero and arbitrary previous hash
+# Manually construct a block with
+# index zero and arbitrary previous hash
   
 def create_genesis_block():
     return Block(0, date.datetime.now, "Genesis block", "0")
