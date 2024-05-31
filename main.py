@@ -26,7 +26,7 @@ class Block:
 # index zero and arbitrary previous hash
   
 def create_genesis_block():
-    return Block(0, date.datetime.now(), "Genesis block", "0")
+    return Block(0, date.datetime.now(), "the Genesis block", "0")
 
         
 def next_block(last_block):
