@@ -32,7 +32,7 @@ def create_genesis_block():
 def next_block(last_block):
         this_index = last_block.index + 1
         this_timestamp = date.datetime.now()
-        this_data = "Hey! i'm Block # " + str(this_index)
+        this_data = "Hey! i'm the Block # " + str(this_index)
         this_hash = last_block.hash
         return Block(this_index, this_timestamp, this_data, this_hash)
 
@@ -50,25 +50,3 @@ for i in range(0, num_of_blocks_to_add):
     
 print ("Block #{} has been added to the blockchain!".format(block_to_add.index))
 print ("Hash: {}\n".format(block_to_add.hash)) 
-# Store the transactions that
-# this node has in a list
-this_nodes_transactions = []
-
-@node.route('/txion', methods=['POST'])
-def transaction():
-  if request.method == 'POST':
-    # On each new POST request,
-    # we extract the transaction data
-    new_txion = request.get_json()
-    # Then we add the transaction to our list
-    this_nodes_transactions.append(new_txion)
-    # Because the transaction was successfully
-    # submitted, we log it to our console
-    print "New transaction"
-    print "FROM: {}".format(new_txion['from'])
-    print "TO: {}".format(new_txion['to'])
-    print "AMOUNT: {}\n".format(new_txion['amount'])
-    # Then we let the client know it worked out
-    return "Transaction submission successful\n"
-
-node.run()
